@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    /* .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+    } */
+</style>
+
+<body>
+    <div class="dropdown">
+        <button class="dropbtn">Interviews</button>
+        <div class="dropdown-content">
+            <% inter.forEach( ele=> { %>
+                <a href="http://localhost:3000/edit?id=<%=ele.id%>">  
+                    <div>
+                        <%=ele.start%>
+                    </div>
+                    <div>
+                        <%=ele.end%>
+                    </div>
+                    <div>
+                        <% ele.participants.forEach( user=> { %>
+                            <%=user.Name %>
+                                <br>
+                                <% }) %>
+                    </div>
+                </a>
+
+
+                <% })%>  
+        </div>
+    </div>
+</body>
+
+</html>
