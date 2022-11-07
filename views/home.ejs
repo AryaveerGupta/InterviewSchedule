@@ -1,33 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
-        body{
+        body {
             background-image: url("data:image/jpeg;base64,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");
-        background-size: cover;
-        background-repeat: no-repeat;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
-        .main-div{
+
+        .main-div {
             align-items: center;
             margin-top: 30vh;
         }
     </style>
 </head>
+
 <body>
     <div class="main-div container-fluid grid text-center">
         <h1>Interview Creation Portal</h1>
-      <p>To edit the Interviews go see the upcoing Interviews.</p>
-      <a class="btn btn-primary" href="http://localhost:3000/create" >Create Interview</a>
-      <a class="btn btn-primary" href="http://localhost:3000/upcoming"> Upcoming Interview</a>
+        <p>To edit the Interviews go see the upcoing Interviews.</p>
+        <a class="btn btn-primary" href="http://localhost:3000/create">Create Interview</a>
+        <a class="btn btn-primary" href="http://localhost:3000/upcoming"> Upcoming Interview</a>
     </div>
-    
 
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>

@@ -31,8 +31,13 @@ app.get('/', async (req, res) => {
     res.render("home");
 });
 
-app.get('/edit', async (req, res) => {
-    res.render("edit");
+app.get('/edit', async (req, res) => { 
+    const user =  await User.find() ; 
+    res.render("edit" ,
+    {
+       users : user ,
+       ids :  req.query.id
+    });
 });
 
 // upcoming interviews . 
@@ -41,7 +46,7 @@ app.get('/upcoming', async (req, res) => {
     const inter = await interview.find().populate("participants");
     res.render("upcoming",
         {
-            inter: inter,
+            inter: inter
         });
 });
 
@@ -53,14 +58,15 @@ app.get('/create', async (req, res) => {
     });
 });
 
-// this if for testing . 
-app.post('/createTemp', async (req, res) => {
+// const validation = async (new_inter) => {
+    
+// }
 
-    console.log(req.body);
-    res.status(200).send("success")
-})
-
-const validation = async (new_inter) => {
+// to create the interview .  
+app.post('/create', async (req, res) => {
+    const new_inter = new interview(req.body); // req has the same schema as req.body . 
+    // throwing a errors.
+    //let flag = validation(new_inter) ; 
     //if start >  end . 
     if (new_inter.start >= new_inter.end) {
         alert("end is less than start.");
@@ -88,17 +94,6 @@ const validation = async (new_inter) => {
             break;
         }
     }
-    return flag ; 
-}
-
-// to create the interview .  
-app.post('/create', async (req, res) => {
-    const new_inter = new interview(req.body); // req has the same schema as req.body . 
-    // throwing a errors.
-    console.log(req.body);
-    
-    let flag = validation(new_inter) ; 
-
     if (flag == true) {
         new_inter.save()
             .then((result) => alert("interview has been created."))
@@ -107,11 +102,40 @@ app.post('/create', async (req, res) => {
 });
 
 // updateing . 
-app.post('/edit/:id', (req, res) => {
 
-    const id = req.params.id;
-    const inter = interview.findById(id) ; 
-    let flag =  validation(inter) ;   
+app.post('/edit', async(req, res) => {
+    const new_inter = new interview(req.body);
+    // throwing a errors.
+    //if start >  end . 
+    if (new_inter.start >= new_inter.end) {
+        alert("end is less than start.");
+        res.status(400).send("end is less than start.");
+    }
+
+    // no of participants .
+    if (new_inter.participants.length < 2) {
+        alert("Number of participants less than 2.");
+        res.status(400).send("Number of participants less than 2.");
+        
+    }
+    
+    let flag = true;
+
+    // all_inter are the interviews where participants are common with the new interview . 
+    const all_inter = await interview.find({ participants: { $elemMatch: { $in: new_inter.participants } } });
+
+    // now if the time of these interview clashes with the new , throw an error . 
+    for (let i = 0; i < all_inter.length; i++) {
+        const inter = all_inter[i];
+        if ((inter.start > new_inter.start && inter.start < new_inter.end) || (inter.end > new_inter.start && inter.end < new_inter.end) || (inter.start < new_inter.start && inter.end > new_inter.end)) {
+            alert("participants have an overlap in interviews.");
+            res.status(400).send("participants have an overlap in interviews.");
+            flag = false;
+            break;
+        }
+    }
+
+    const id = req.query.id;
     if(flag == true)
     {
         interview.findByIdAndUpdate(id, { start: req.body.start, end: req.body.end, participants: req.body.participants })
@@ -123,6 +147,7 @@ app.post('/edit/:id', (req, res) => {
             console.log(err);
         })
     }
+    
 });
 
 // creating a get request to show all the interviews . 

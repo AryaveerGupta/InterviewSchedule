@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <form action="/createTemp" , enctype="application/x-www-form-urlencoded" , method="post">
+    <form action="/create" , enctype="application/x-www-form-urlencoded" , method="post">
         <label for="st">Start Time</label>
         <input type="datetime-local" id="st" name="start" placeholder="Give the start datetime" required>
 
@@ -19,7 +19,7 @@
         <label for="par">Participants</label>
         <%  users.forEach(user => {  %>
             <label for="<%= user.Name%>"><%= user.Name%></label>
-            <input type="checkbox" name="participant" id="<%= user.Name%>" value="<%= user.id%>">
+            <input type="checkbox" name="participants" id="<%= user.Name%>" value="<%= user.id%>">
             <br>
         <%  }) %>   
             <input type="submit" value="Submit">

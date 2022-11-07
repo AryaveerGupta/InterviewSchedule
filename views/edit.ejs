@@ -7,9 +7,18 @@
     <title>Document</title>
 </head>
 <body>
-      <form action="/edit" , enctype="application/x-www-form-urlencoded" , method="post">
-        <label for="id">Id of Interview to edit</label>
-        <input type="text" id="id" name="id" placeholder="Give the Id" required>
+      <form action="/edit?id=<%=ids%>" , enctype="application/x-www-form-urlencoded" , method="post">
+        <label for="st">Start Time</label>
+        <input type="datetime-local" id="st" name="start" placeholder="Give the start datetime" required>
+        <label for="en">End Time</label>
+        <input type="datetime-local" id="en" name="end" placeholder="Give the end datetime" required>
+        <label for="par">Participants</label>
+        <%  users.forEach(user => {  %>
+            <label for="<%= user.Name%>"><%= user.Name%></label>
+            <input type="checkbox" name="participants" id="<%= user.Name%>" value="<%= user.id%>">
+            <br>
+        <%  }) %>   
+            <input type="submit" value="Submit"> 
       </form>
 </body>
 </html>
